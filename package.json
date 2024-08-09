@@ -45,5 +45,6 @@
     "gh-pages": "^6.1.1",
     "react-router-dom": "^6.26.0",
     "typescript-plugin-css-modules": "^5.1.0"
-  }
+  },
+  "homepage": "https://daiitsuki.github.io/happychecking"
 }
