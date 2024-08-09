@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/happychecking/static/css/main.2b6701ef.css",
+    "main.js": "/happychecking/static/js/main.605c71de.js",
+    "index.html": "/happychecking/index.html",
+    "main.2b6701ef.css.map": "/happychecking/static/css/main.2b6701ef.css.map",
+    "main.605c71de.js.map": "/happychecking/static/js/main.605c71de.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2b6701ef.css",
+    "static/js/main.605c71de.js"
+  ]
+}
