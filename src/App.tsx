@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./firebase";
+import { useEffect, useState } from "react";
+import { authService, dbService } from "./firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import AppRouter from "./components/router/Router";
 
 function App() {
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const onAuthStateChange = async () => {
+    authService.onAuthStateChanged(async (user) => {
+      if (user && user.displayName) {
+        setIsLoggedIn(true);
+
+        const docRef = doc(dbService, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+          await setDoc(docRef, {
+            displayName: user.displayName,
+            uid: user.uid,
+          });
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
+      setInit(true);
+    });
+  };
+
+  useEffect(() => {
+    onAuthStateChange();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "로딩중.."}
     </div>
   );
 }

@@ -1,0 +1,53 @@
+.calendarBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 340px;
+  border-radius: 34px;
+  background: white;
+  box-shadow: 0px 12px 17px rgba(248, 246, 246, 0.09);
+}
+
+.menuBar {
+  width: 100%;
+}
+
+.btnBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 35px 20px 35px;
+}
+
+.todayBtn {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--myblack);
+}
+
+.monthChangeBtn {
+  color: var(--mygray);
+  font-weight: 700;
+}
+
+.dayBox {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  color: var(--mygray);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 0px 20px 10px 20px;
+}
+
+.footer {
+  display: block;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
