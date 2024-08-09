@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import Auth from "../../routes/Auth";
 import Home from "../../routes/Home";
 
@@ -8,7 +8,7 @@ interface IAppRouterProps {
 }
 
 const AppRouter: React.FC<IAppRouterProps> = ({ isLoggedIn }) => (
-  <BrowserRouter>
+  <Router>
     <Routes>
       {isLoggedIn ? (
         <Route path="/" element={<Home />} />
@@ -16,7 +16,7 @@ const AppRouter: React.FC<IAppRouterProps> = ({ isLoggedIn }) => (
         <Route path="/" element={<Auth />} />
       )}
     </Routes>
-  </BrowserRouter>
+  </Router>
 );
 
 export default AppRouter;
