@@ -56,7 +56,7 @@ export default function CalendarBody({
     }
   };
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   useEffect(() => {
