@@ -5,8 +5,13 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import AppRouter from "./components/router/Router";
 
 function App() {
-  const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //
+  // FOR DEV FOR DEV FOR DEV
+  // FOR DEV FOR DEV FOR DEV
+  // 배포시엔 아래 state 둘다 false로 바꾸기
+  //
+  const [init, setInit] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const onAuthStateChange = async () => {
     authService.onAuthStateChanged(async (user) => {
@@ -29,7 +34,7 @@ function App() {
   };
 
   useEffect(() => {
-    onAuthStateChange();
+    // onAuthStateChange();
   }, []);
 
   return (

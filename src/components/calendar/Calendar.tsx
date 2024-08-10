@@ -1,9 +1,21 @@
-import { useState } from "react";
-import CalendarBody from "./CalendarBody";
+import React, { useState } from "react";
+import CalendarBody, { IDateData } from "./CalendarBody";
 import styles from "../../styles/calendar/calendar.module.css";
 import CalendarHeader from "./CalendarHeader";
 
-export default function Calendar() {
+interface ICalendarProps {
+  displayInfo: boolean;
+  setDisplayInfo: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedDate: IDateData | undefined;
+  setClickedDate: React.Dispatch<React.SetStateAction<IDateData | undefined>>;
+}
+
+const Calendar: React.FC<ICalendarProps> = ({
+  setDisplayInfo,
+  setClickedDate,
+  clickedDate,
+  displayInfo,
+}) => {
   class DDate {
     public year: number;
     public month: number;
@@ -39,7 +51,16 @@ export default function Calendar() {
         onNextMonth={nextMonth}
         onToday={goToday}
       />
-      <CalendarBody year={criteria.year} month={criteria.month} />
+      <CalendarBody
+        year={criteria.year}
+        month={criteria.month}
+        displayInfo={displayInfo}
+        setDisplayInfo={setDisplayInfo}
+        clickedDate={clickedDate}
+        setClickedDate={setClickedDate}
+      />
     </div>
   );
-}
+};
+
+export default Calendar;

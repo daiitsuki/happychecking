@@ -1,19 +1,24 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { dbService } from "../../firebase";
 import styles from "../../styles/calendar/calendarBody.module.css";
 import DateBox from "./DateBox";
 import EventBtnBox from "./EventBtnBox";
 
-interface ICalendarProps {
+interface ICalendarBodyProps {
   year: number;
   month: number;
+  displayInfo: boolean;
+  setDisplayInfo: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedDate: IDateData | undefined;
+  setClickedDate: React.Dispatch<React.SetStateAction<IDateData | undefined>>;
 }
 
-interface IDateData {
+export interface IDateData {
   year: number;
   month: number;
   date: number;
+  ymd: string;
   currentMonth: boolean;
   event?: number[];
 }
@@ -31,8 +36,15 @@ interface IEventData {
   id: string;
 }
 
-export default function CalendarBody({ year, month }: ICalendarProps) {
+export default function CalendarBody({
+  year,
+  month,
+  setDisplayInfo,
+  setClickedDate,
+  clickedDate,
+}: ICalendarBodyProps) {
   const [btnClicked, setBtnClicked] = useState<IBtnClicked>({ clicked: false });
+
   const [eventData, setEventData] = useState<IEventData[]>([]);
 
   const getData = async () => {
@@ -44,7 +56,7 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
     }
   };
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
 
   useEffect(() => {
@@ -108,6 +120,7 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
         year: y,
         month: m,
         date: d,
+        ymd: `${y}_${m}_${d}`,
         currentMonth: false,
         event: eventCheck(y, m, d),
       });
@@ -118,6 +131,7 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
         year,
         month,
         date: i,
+        ymd: `${year}_${month}_${i}`,
         currentMonth: true,
         event: eventCheck(year, month, i),
       });
@@ -134,6 +148,7 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
         year: y,
         month: m,
         date: i,
+        ymd: `${y}_${m}_${i}`,
         currentMonth: false,
         event: eventCheck(y, m, i),
       });
@@ -149,7 +164,11 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
     setBtnClicked({ clicked: true, btnType: btnId });
   };
 
-  const dateClick = (year: number, month: number, date: number) => {
+  const dateClick = (data: IDateData) => {
+    const year = data.year;
+    const month = data.month;
+    const date = data.date;
+    // Event버튼 클릭되어 있을 경우
     if (btnClicked.clicked && btnClicked.btnType) {
       const clickedData: IEventData = {
         year,
@@ -167,6 +186,25 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
         setEventData((prev) => [...prev, clickedData]);
       }
       console.log(eventData);
+    }
+    // Event 버튼 클릭하지 않고 그냥 클릭할 경우
+    if (
+      !btnClicked.clicked &&
+      // && 이벤트가 존재할때만
+      eventData.some(
+        (obj) => obj.year === year && obj.month === month && obj.date === date
+      )
+    ) {
+      if (clickedDate) {
+        if (clickedDate.ymd === data.ymd) {
+          setDisplayInfo((prev) => !prev);
+        } else {
+          setClickedDate(data);
+        }
+      } else {
+        setDisplayInfo((prev) => !prev);
+        setClickedDate(data);
+      }
     }
   };
 
@@ -204,7 +242,15 @@ export default function CalendarBody({ year, month }: ICalendarProps) {
               btnType={btnClicked.btnType}
               btnClicked={btnClicked.clicked}
               onDateClick={() =>
-                n.currentMonth && dateClick(n.year, n.month, n.date)
+                n.currentMonth &&
+                dateClick({
+                  year: n.year,
+                  month: n.month,
+                  date: n.date,
+                  ymd: `${n.year}_${n.month}_${n.date}`,
+                  currentMonth: n.currentMonth,
+                  event: n.event,
+                })
               }
               isActive={isActive}
             />
