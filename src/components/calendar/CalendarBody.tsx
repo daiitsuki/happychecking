@@ -197,6 +197,7 @@ export default function CalendarBody({
     }
   };
 
+  const renderCalendarLength = renderCalendar().map((n) => n).length;
   return (
     <div className={styles.bodyBox}>
       <div
@@ -204,6 +205,13 @@ export default function CalendarBody({
           btnClicked.clicked
             ? `${styles.dateBox} ${styles.filled}`
             : `${styles.dateBox} ${styles.unfilled}`
+        }
+        style={
+          renderCalendarLength === 28
+            ? { height: 200 }
+            : renderCalendarLength === 35
+            ? { height: 250 }
+            : { height: 300 }
         }
       >
         {renderCalendar().map((n) => {
@@ -240,8 +248,10 @@ export default function CalendarBody({
       </div>
       <EventBtnBox
         btnType={btnClicked.btnType}
+        eventData={eventData}
         onBtnClick={eventBtnClick}
         dataSave={dataSave}
+        month={month}
       />
     </div>
   );

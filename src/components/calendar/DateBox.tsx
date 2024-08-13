@@ -41,7 +41,7 @@ const DateBox: React.FC<IDateBoxProps> = ({
       className={currentMonth ? styles.currentDate : styles.notCurrentDate}
       onClick={onDateClick}
       style={
-        isActive && btnType
+        isActive && btnType && currentMonth
           ? { backgroundColor: colorMap[btnType] }
           : !btnType && clickedDate && clickedDate.ymd === ymd
           ? { backgroundColor: "#b3a6ea" }
@@ -63,7 +63,7 @@ const DateBox: React.FC<IDateBoxProps> = ({
           <span
             key={type}
             style={
-              !btnClicked && event?.includes(type)
+              !btnClicked && event?.includes(type) && currentMonth
                 ? { fontSize: 8, color: colorMap[type] }
                 : { display: "none" }
             }
