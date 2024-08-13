@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import CalendarBody, { IDateData } from "./CalendarBody";
 import styles from "../../styles/calendar/calendar.module.css";
 import CalendarHeader from "./CalendarHeader";
+import { IEventData } from "../../routes/Home";
 
 interface ICalendarProps {
+  eventData: IEventData[];
+  setEventData: React.Dispatch<React.SetStateAction<IEventData[]>>;
+  dataSave: () => Promise<void>;
   displayInfo: boolean;
   setDisplayInfo: React.Dispatch<React.SetStateAction<boolean>>;
   clickedDate: IDateData | undefined;
@@ -11,6 +15,9 @@ interface ICalendarProps {
 }
 
 const Calendar: React.FC<ICalendarProps> = ({
+  eventData,
+  setEventData,
+  dataSave,
   setDisplayInfo,
   setClickedDate,
   clickedDate,
@@ -54,6 +61,9 @@ const Calendar: React.FC<ICalendarProps> = ({
       <CalendarBody
         year={criteria.year}
         month={criteria.month}
+        eventData={eventData}
+        dataSave={dataSave}
+        setEventData={setEventData}
         displayInfo={displayInfo}
         setDisplayInfo={setDisplayInfo}
         clickedDate={clickedDate}

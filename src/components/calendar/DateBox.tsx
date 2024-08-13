@@ -1,26 +1,31 @@
 import React from "react";
 import styles from "../../styles/calendar/calendarBody.module.css";
+import { IDateData } from "./CalendarBody";
 
-interface DateBoxProps {
+interface IDateBoxProps {
   year: number;
   month: number;
   date: number;
+  ymd: string;
   currentMonth: boolean;
   event?: number[];
   btnType?: number;
   btnClicked: boolean;
+  clickedDate: IDateData | undefined;
   onDateClick: () => void;
   isActive: boolean | 0 | undefined;
 }
 
-const DateBox: React.FC<DateBoxProps> = ({
+const DateBox: React.FC<IDateBoxProps> = ({
   year,
   month,
   date,
+  ymd,
   currentMonth,
   event,
   btnType,
   btnClicked,
+  clickedDate,
   onDateClick,
   isActive,
 }) => {
@@ -35,7 +40,13 @@ const DateBox: React.FC<DateBoxProps> = ({
     <div
       className={currentMonth ? styles.currentDate : styles.notCurrentDate}
       onClick={onDateClick}
-      style={isActive && btnType ? { backgroundColor: colorMap[btnType] } : {}}
+      style={
+        isActive && btnType
+          ? { backgroundColor: colorMap[btnType] }
+          : !btnType && clickedDate && clickedDate.ymd === ymd
+          ? { backgroundColor: "#b3a6ea" }
+          : {}
+      }
     >
       <span
         style={

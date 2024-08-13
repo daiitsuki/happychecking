@@ -1,6 +1,5 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { dbService } from "../../firebase";
+import { IEventData } from "../../routes/Home";
 import styles from "../../styles/calendar/calendarBody.module.css";
 import DateBox from "./DateBox";
 import EventBtnBox from "./EventBtnBox";
@@ -8,6 +7,9 @@ import EventBtnBox from "./EventBtnBox";
 interface ICalendarBodyProps {
   year: number;
   month: number;
+  eventData: IEventData[];
+  setEventData: React.Dispatch<React.SetStateAction<IEventData[]>>;
+  dataSave: () => Promise<void>;
   displayInfo: boolean;
   setDisplayInfo: React.Dispatch<React.SetStateAction<boolean>>;
   clickedDate: IDateData | undefined;
@@ -28,36 +30,18 @@ interface IBtnClicked {
   btnType?: number;
 }
 
-interface IEventData {
-  year: number;
-  month: number;
-  date: number;
-  btnType: number;
-  id: string;
-}
-
 export default function CalendarBody({
   year,
   month,
+  eventData,
+  setEventData,
+  dataSave,
+  displayInfo,
   setDisplayInfo,
-  setClickedDate,
   clickedDate,
+  setClickedDate,
 }: ICalendarBodyProps) {
   const [btnClicked, setBtnClicked] = useState<IBtnClicked>({ clicked: false });
-
-  const [eventData, setEventData] = useState<IEventData[]>([]);
-
-  const getData = async () => {
-    const docRef = doc(dbService, "data", "eventdata");
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      setEventData(data.eventData);
-    }
-  };
-  useEffect(() => {
-    getData();
-  }, []);
 
   useEffect(() => {
     const colorMap = [
@@ -198,24 +182,19 @@ export default function CalendarBody({
       if (clickedDate) {
         if (clickedDate.ymd === data.ymd) {
           setDisplayInfo((prev) => !prev);
+          setClickedDate(undefined);
         } else {
-          setClickedDate(data);
+          setDisplayInfo((prev) => !prev);
+          setTimeout(() => {
+            setClickedDate(data);
+            setDisplayInfo((prev) => !prev);
+          }, 300);
         }
       } else {
         setDisplayInfo((prev) => !prev);
         setClickedDate(data);
       }
     }
-  };
-
-  const dataSave = async () => {
-    const shouldDataSave = window.confirm("변경 사항을 저장할까요?");
-    if (!shouldDataSave) {
-      return;
-    }
-    const docRef = doc(dbService, "data", "eventdata");
-    await setDoc(docRef, { eventData });
-    alert("변경 사항이 저장되었습니다.");
   };
 
   return (
@@ -237,10 +216,12 @@ export default function CalendarBody({
               year={n.year}
               month={n.month}
               date={n.date}
+              ymd={n.ymd}
               currentMonth={n.currentMonth}
               event={n.event}
               btnType={btnClicked.btnType}
               btnClicked={btnClicked.clicked}
+              clickedDate={clickedDate}
               onDateClick={() =>
                 n.currentMonth &&
                 dateClick({

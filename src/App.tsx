@@ -12,7 +12,11 @@ function App() {
   //
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  //
+  // FOR DEV FOR DEV FOR DEV
+  // FOR DEV FOR DEV FOR DEV
+  // 배포시엔 위의 state 둘다 false로 바꾸기
+  //
   const onAuthStateChange = async () => {
     authService.onAuthStateChanged(async (user) => {
       if (user && user.displayName) {
@@ -34,7 +38,13 @@ function App() {
   };
 
   useEffect(() => {
+    //
+    // 배포 시에 주석 해제
+    // 배포 시에 주석 해제
     onAuthStateChange();
+    // 배포 시에 주석 해제
+    // 배포 시에 주석 해제
+    //
   }, []);
 
   return (
