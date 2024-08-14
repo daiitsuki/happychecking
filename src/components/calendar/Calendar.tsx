@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CalendarBody, { IDateData } from "./CalendarBody";
 import styles from "../../styles/calendar/calendar.module.css";
 import CalendarHeader from "./CalendarHeader";
@@ -14,6 +14,11 @@ interface ICalendarProps {
   setClickedDate: React.Dispatch<React.SetStateAction<IDateData | undefined>>;
 }
 
+export interface Itransition {
+  isMove: boolean;
+  direction?: string;
+}
+
 const Calendar: React.FC<ICalendarProps> = ({
   eventData,
   setEventData,
@@ -24,15 +29,56 @@ const Calendar: React.FC<ICalendarProps> = ({
   displayInfo,
 }) => {
   const [criteria, setCriteria] = useState<Date>(new Date());
+  const [transition, setTransition] = useState<Itransition>({ isMove: false });
 
-  const prevMonth = () =>
+  const timeoutRef = useRef<number | null>(null);
+
+  const prevMonth = () => {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+    }
     setCriteria((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
-
-  const nextMonth = () =>
+    setTransition({ isMove: true, direction: "prev" });
+    timeoutRef.current = window.setTimeout(
+      () => setTransition({ isMove: false }),
+      500
+    );
+  };
+  const nextMonth = () => {
+    if (timeoutRef.current !== null) {
+      clearTimeout(timeoutRef.current);
+    }
     setCriteria((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    setTransition({ isMove: true, direction: "next" });
+    timeoutRef.current = window.setTimeout(
+      () => setTransition({ isMove: false }),
+      500
+    );
+  };
+  const goToday = () => {
+    const today = new Date();
+    const prevYear = criteria.getFullYear();
+    const prevMonth = criteria.getMonth();
+    const todayYear = today.getFullYear();
+    const todayMonth = today.getMonth();
 
-  const goToday = () => setCriteria(new Date());
-
+    if (prevYear !== todayYear && prevMonth !== todayMonth) {
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+      }
+      const direction =
+        prevYear > todayYear ||
+        (prevYear === todayYear && prevMonth > todayMonth)
+          ? "prev"
+          : "next";
+      setCriteria(today);
+      setTransition({ isMove: true, direction });
+      timeoutRef.current = window.setTimeout(
+        () => setTransition({ isMove: false }),
+        500
+      );
+    }
+  };
   return (
     <div className={styles.calendarBox}>
       <CalendarHeader
@@ -52,6 +98,7 @@ const Calendar: React.FC<ICalendarProps> = ({
         setDisplayInfo={setDisplayInfo}
         clickedDate={clickedDate}
         setClickedDate={setClickedDate}
+        transition={transition}
       />
     </div>
   );

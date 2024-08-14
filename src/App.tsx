@@ -6,15 +6,13 @@ import AppRouter from "./components/router/Router";
 
 function App() {
   //
-  // FOR DEV FOR DEV FOR DEV
-  // FOR DEV FOR DEV FOR DEV
+  // Dev => true; deploy => false;
   // 배포시엔 아래 state 둘다 false로 바꾸기
   //
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   //
-  // FOR DEV FOR DEV FOR DEV
-  // FOR DEV FOR DEV FOR DEV
+  // Dev => true; deploy => false;
   // 배포시엔 위의 state 둘다 false로 바꾸기
   //
   const onAuthStateChange = async () => {

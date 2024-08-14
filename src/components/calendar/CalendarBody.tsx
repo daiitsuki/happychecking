@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IEventData } from "../../routes/Home";
 import styles from "../../styles/calendar/calendarBody.module.css";
+import { Itransition } from "./Calendar";
 import DateBox from "./DateBox";
 import EventBtnBox from "./EventBtnBox";
 
@@ -14,6 +15,7 @@ interface ICalendarBodyProps {
   setDisplayInfo: React.Dispatch<React.SetStateAction<boolean>>;
   clickedDate: IDateData | undefined;
   setClickedDate: React.Dispatch<React.SetStateAction<IDateData | undefined>>;
+  transition: Itransition;
 }
 
 export interface IDateData {
@@ -40,6 +42,7 @@ export default function CalendarBody({
   setDisplayInfo,
   clickedDate,
   setClickedDate,
+  transition,
 }: ICalendarBodyProps) {
   const [btnClicked, setBtnClicked] = useState<IBtnClicked>({ clicked: false });
 
@@ -89,7 +92,7 @@ export default function CalendarBody({
     return event.length > 0 ? event : undefined;
   };
 
-  const renderCalendar = () => {
+  const renderCalendar = (year: number, month: number) => {
     let array: IDateData[] = [];
     // 이전 달 날짜 추가
     for (let i = 1; i <= dayOfFirstDate(); i++) {
@@ -197,15 +200,21 @@ export default function CalendarBody({
     }
   };
 
-  const renderCalendarLength = renderCalendar().map((n) => n).length;
+  const renderCalendarLength = renderCalendar(year, month).map((n) => n).length;
   return (
     <div className={styles.bodyBox}>
       <div
-        className={
+        className={`${
           btnClicked.clicked
             ? `${styles.dateBox} ${styles.filled}`
             : `${styles.dateBox} ${styles.unfilled}`
-        }
+        } ${
+          transition.isMove
+            ? transition.direction === "prev"
+              ? `${styles.slideFromPrev}`
+              : `${styles.slideFromNext}`
+            : ``
+        }`}
         style={
           renderCalendarLength === 28
             ? { height: 200 }
@@ -214,7 +223,7 @@ export default function CalendarBody({
             : { height: 300 }
         }
       >
-        {renderCalendar().map((n) => {
+        {renderCalendar(year, month).map((n) => {
           const isActive =
             btnClicked.btnType && n.event?.includes(btnClicked.btnType);
 
