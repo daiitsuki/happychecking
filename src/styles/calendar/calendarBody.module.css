@@ -8,17 +8,39 @@
   border-radius: 0px 0px 34px 34px;
 }
 
+.dateContainer {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: height 0.3s ease;
+}
+
+.dateContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--overlayColor);
+  transition: all 0.5s ease;
+  z-index: 0;
+}
+
+.dateContainer.filled::before {
+  width: 100%;
+}
+
+.dateContainer.unfilled::before {
+  width: 0;
+}
+
 .dateBox {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
   padding: 0px 20px 0px 20px;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-
-  transition: height 0.3s ease;
 }
 
 .dateBox.slideFromPrev {
@@ -47,26 +69,6 @@
   to {
     transform: translateX(0);
   }
-}
-
-.dateBox::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background-color: var(--overlayColor);
-  transition: all 0.5s ease;
-  z-index: 0;
-}
-
-.dateBox.filled::before {
-  width: 100%;
-}
-
-.dateBox.unfilled::before {
-  width: 0;
 }
 
 .notCurrentDate,

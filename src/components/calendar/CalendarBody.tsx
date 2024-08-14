@@ -206,15 +206,9 @@ export default function CalendarBody({
       <div
         className={`${
           btnClicked.clicked
-            ? `${styles.dateBox} ${styles.filled}`
-            : `${styles.dateBox} ${styles.unfilled}`
-        } ${
-          transition.isMove
-            ? transition.direction === "prev"
-              ? `${styles.slideFromPrev}`
-              : `${styles.slideFromNext}`
-            : ``
-        }`}
+            ? `${styles.dateContainer} ${styles.filled}`
+            : `${styles.dateContainer} ${styles.unfilled}`
+        } `}
         style={
           renderCalendarLength === 28
             ? { height: 200 }
@@ -223,37 +217,47 @@ export default function CalendarBody({
             : { height: 300 }
         }
       >
-        {renderCalendar(year, month).map((n) => {
-          const isActive =
-            btnClicked.btnType && n.event?.includes(btnClicked.btnType);
+        <div
+          className={`${styles.dateBox} ${
+            transition.isMove
+              ? transition.direction === "prev"
+                ? `${styles.slideFromPrev}`
+                : `${styles.slideFromNext}`
+              : ``
+          }`}
+        >
+          {renderCalendar(year, month).map((n) => {
+            const isActive =
+              btnClicked.btnType && n.event?.includes(btnClicked.btnType);
 
-          return (
-            <DateBox
-              key={`${n.year}_${n.month}_${n.date}`}
-              year={n.year}
-              month={n.month}
-              date={n.date}
-              ymd={n.ymd}
-              currentMonth={n.currentMonth}
-              event={n.event}
-              btnType={btnClicked.btnType}
-              btnClicked={btnClicked.clicked}
-              clickedDate={clickedDate}
-              onDateClick={() =>
-                n.currentMonth &&
-                dateClick({
-                  year: n.year,
-                  month: n.month,
-                  date: n.date,
-                  ymd: `${n.year}_${n.month}_${n.date}`,
-                  currentMonth: n.currentMonth,
-                  event: n.event,
-                })
-              }
-              isActive={isActive}
-            />
-          );
-        })}
+            return (
+              <DateBox
+                key={`${n.year}_${n.month}_${n.date}`}
+                year={n.year}
+                month={n.month}
+                date={n.date}
+                ymd={n.ymd}
+                currentMonth={n.currentMonth}
+                event={n.event}
+                btnType={btnClicked.btnType}
+                btnClicked={btnClicked.clicked}
+                clickedDate={clickedDate}
+                onDateClick={() =>
+                  n.currentMonth &&
+                  dateClick({
+                    year: n.year,
+                    month: n.month,
+                    date: n.date,
+                    ymd: `${n.year}_${n.month}_${n.date}`,
+                    currentMonth: n.currentMonth,
+                    event: n.event,
+                  })
+                }
+                isActive={isActive}
+              />
+            );
+          })}
+        </div>
       </div>
       <EventBtnBox
         btnType={btnClicked.btnType}
