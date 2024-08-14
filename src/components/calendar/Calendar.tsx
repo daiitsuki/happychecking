@@ -42,7 +42,7 @@ const Calendar: React.FC<ICalendarProps> = ({
     setTransition({ isMove: true, direction: "prev" });
     timeoutRef.current = window.setTimeout(
       () => setTransition({ isMove: false }),
-      500
+      300
     );
   };
   const nextMonth = () => {
@@ -54,7 +54,7 @@ const Calendar: React.FC<ICalendarProps> = ({
     setTransition({ isMove: true, direction: "next" });
     timeoutRef.current = window.setTimeout(
       () => setTransition({ isMove: false }),
-      500
+      300
     );
   };
   const goToday = () => {
@@ -78,7 +78,7 @@ const Calendar: React.FC<ICalendarProps> = ({
       setTransition({ isMove: true, direction });
       timeoutRef.current = window.setTimeout(
         () => setTransition({ isMove: false }),
-        500
+        300
       );
     }
   };
