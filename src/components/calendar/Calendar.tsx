@@ -36,6 +36,7 @@ const Calendar: React.FC<ICalendarProps> = ({
   const prevMonth = () => {
     if (timeoutRef.current !== null) {
       clearTimeout(timeoutRef.current);
+      setTransition({ isMove: false });
     }
     setCriteria((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
     setTransition({ isMove: true, direction: "prev" });
@@ -47,6 +48,7 @@ const Calendar: React.FC<ICalendarProps> = ({
   const nextMonth = () => {
     if (timeoutRef.current !== null) {
       clearTimeout(timeoutRef.current);
+      setTransition({ isMove: false });
     }
     setCriteria((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
     setTransition({ isMove: true, direction: "next" });
@@ -62,9 +64,10 @@ const Calendar: React.FC<ICalendarProps> = ({
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
 
-    if (prevYear !== todayYear && prevMonth !== todayMonth) {
+    if (prevYear !== todayYear || prevMonth !== todayMonth) {
       if (timeoutRef.current !== null) {
         clearTimeout(timeoutRef.current);
+        setTransition({ isMove: false });
       }
       const direction =
         prevYear > todayYear ||
