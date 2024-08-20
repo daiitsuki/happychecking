@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/happychecking/static/css/main.64942bf1.css",
-    "main.js": "/happychecking/static/js/main.13796118.js",
+    "main.css": "/happychecking/static/css/main.15213dd4.css",
+    "main.js": "/happychecking/static/js/main.30117870.js",
     "index.html": "/happychecking/index.html",
-    "main.64942bf1.css.map": "/happychecking/static/css/main.64942bf1.css.map",
-    "main.13796118.js.map": "/happychecking/static/js/main.13796118.js.map"
+    "main.15213dd4.css.map": "/happychecking/static/css/main.15213dd4.css.map",
+    "main.30117870.js.map": "/happychecking/static/js/main.30117870.js.map"
   },
   "entrypoints": [
-    "static/css/main.64942bf1.css",
-    "static/js/main.13796118.js"
+    "static/css/main.15213dd4.css",
+    "static/js/main.30117870.js"
   ]
 }
