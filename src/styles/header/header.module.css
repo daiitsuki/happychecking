@@ -1,0 +1,48 @@
+.box {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 340px;
+  margin-bottom: 6px;
+  background-color: white;
+  box-shadow: 0px 12px 17px rgba(248, 246, 246, 0.09);
+  border-radius: 34px;
+}
+
+.ddayContainer {
+  margin-right: auto;
+}
+
+.ddayBox {
+  border-radius: 34px;
+  padding: 8px 0px 8px 25px;
+}
+
+.heart {
+  font-size: 14px;
+  color: #ef0107;
+  margin-right: 3px;
+}
+
+.dday {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.datebox {
+  padding: 8px 20px;
+}
+
+.date {
+  font-size: 16px;
+  font-weight: 800;
+  /* 줄바꿈 안되게 */
+  white-space: nowrap;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 34px;
+  padding: 7px 25px 7px 0px;
+}

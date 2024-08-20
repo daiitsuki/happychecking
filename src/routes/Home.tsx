@@ -2,6 +2,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Calendar from "../components/calendar/Calendar";
 import { IDateData } from "../components/calendar/CalendarBody";
+import Header from "../components/header/Header";
 import DateInfo from "../components/info/DateInfo";
 import { dbService } from "../firebase";
 
@@ -51,6 +52,7 @@ const Home = () => {
   }, []);
   return (
     <>
+      <Header />
       <Calendar
         eventData={eventData}
         setEventData={setEventData}

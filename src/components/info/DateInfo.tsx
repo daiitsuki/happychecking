@@ -51,11 +51,19 @@ const DateInfo: React.FC<IDateInfoProps> = ({
     }
   };
 
+  const koreanDay = (ymd: string) => {
+    const arr = ymd.split("_");
+    const date = new Date(Number(arr[0]), Number(arr[1]) - 1, Number(arr[2]));
+    return ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+  };
+
   const infoTitle = () => (
     <>
       <div className={styles.title}>
         {clickedDate
-          ? `${clickedDate.year}. ${clickedDate.month}. ${clickedDate.date}`
+          ? `${clickedDate.year}. ${clickedDate.month}. ${
+              clickedDate.date
+            }. ${koreanDay(clickedDate.ymd)}`
           : ""}
       </div>
       <button
