@@ -4,6 +4,7 @@ import Calendar from "../components/calendar/Calendar";
 import { IDateData } from "../components/calendar/CalendarBody";
 import Header from "../components/header/Header";
 import DateInfo from "../components/info/DateInfo";
+import Search from "../components/search/Search";
 import { dbService } from "../firebase";
 
 // IEventData는 Firebase Database에 저장되는 부분이므로
@@ -19,6 +20,7 @@ export interface IEventData {
 
 const Home = () => {
   const [displayInfo, setDisplayInfo] = useState(false);
+  const [displaySearch, setDisplaySearch] = useState(false);
   const [clickedDate, setClickedDate] = useState<IDateData>();
   const [eventData, setEventData] = useState<IEventData[]>([]);
 
@@ -52,7 +54,8 @@ const Home = () => {
   }, []);
   return (
     <>
-      <Header />
+      <Header setDisplaySearch={setDisplaySearch} />
+      <Search eventData={eventData} displaySearch={displaySearch} />
       <Calendar
         eventData={eventData}
         setEventData={setEventData}
