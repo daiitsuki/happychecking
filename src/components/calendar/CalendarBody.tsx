@@ -176,11 +176,11 @@ export default function CalendarBody({
     }
     // Event 버튼 클릭하지 않고 그냥 클릭할 경우
     if (
-      !btnClicked.clicked &&
+      !btnClicked.clicked
       // && 이벤트가 존재할때만
-      eventData.some(
-        (obj) => obj.year === year && obj.month === month && obj.date === date
-      )
+      // eventData.some(
+      //   (obj) => obj.year === year && obj.month === month && obj.date === date
+      // )
     ) {
       if (clickedDate) {
         if (clickedDate.ymd === data.ymd) {
