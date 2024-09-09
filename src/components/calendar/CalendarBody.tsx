@@ -172,46 +172,28 @@ export default function CalendarBody({
       } else {
         setEventData((prev) => [...prev, clickedData]);
       }
-      console.log(eventData);
     }
 
     // Event 버튼 클릭하지 않고 그냥 클릭할 경우
     if (!btnClicked.clicked) {
-      if (
-        // 이벤트가 존재할 때
-        eventData.some(
-          (obj) => obj.year === year && obj.month === month && obj.date === date
-        )
-      ) {
-        if (clickedDate) {
-          // 이미 info가 열려 있을 경우
-          if (clickedDate.ymd === data.ymd) {
-            // 같은 날짜 클릭 시 info 닫힘
-            setDisplayInfo((prev) => !prev);
-            setClickedDate(undefined);
-          } else {
-            // 다른 날짜 클릭시 다른 날짜로 info 변경
-            setDisplayInfo((prev) => !prev);
-            setTimeout(() => {
-              setClickedDate(data);
-              setDisplayInfo((prev) => !prev);
-            }, 300);
-          }
-        } else {
-          // info 가 열려있지 않을 경우
-          setDisplayInfo((prev) => !prev);
-          setClickedDate(data);
-        }
-      } else {
-        // 이벤트가 존재 하지 않는 날짜를 눌렀을 경우
-        if (displayInfo) {
-          // 이미 info가 켜져 있을 때
+      if (clickedDate) {
+        // 이미 info가 열려 있을 경우
+        if (clickedDate.ymd === data.ymd) {
+          // 같은 날짜 클릭 시 info 닫힘
           setDisplayInfo((prev) => !prev);
           setClickedDate(undefined);
         } else {
-          // info가 켜져 있지 않을 경우에는 event btn 2가 눌린것과 같은 반응
-          setBtnClicked({ clicked: true, btnType: 2 });
+          // 다른 날짜 클릭시 다른 날짜로 info 변경
+          setDisplayInfo((prev) => !prev);
+          setTimeout(() => {
+            setClickedDate(data);
+            setDisplayInfo((prev) => !prev);
+          }, 300);
         }
+      } else {
+        // info 가 열려있지 않을 경우
+        setDisplayInfo((prev) => !prev);
+        setClickedDate(data);
       }
     }
   };
