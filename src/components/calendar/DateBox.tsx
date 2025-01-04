@@ -44,7 +44,7 @@ const DateBox: React.FC<IDateBoxProps> = ({
         isActive && btnType && currentMonth
           ? { backgroundColor: colorMap[btnType] }
           : !btnType && clickedDate && clickedDate.ymd === ymd
-          ? { backgroundColor: "#b3a6ea" }
+          ? { backgroundColor: "#d9dce1" }
           : {}
       }
     >

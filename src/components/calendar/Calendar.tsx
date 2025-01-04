@@ -44,6 +44,8 @@ const Calendar: React.FC<ICalendarProps> = ({
       () => setTransition({ isMove: false }),
       300
     );
+    setDisplayInfo(false);
+    setClickedDate(undefined);
   };
   const nextMonth = () => {
     if (timeoutRef.current !== null) {
@@ -56,6 +58,8 @@ const Calendar: React.FC<ICalendarProps> = ({
       () => setTransition({ isMove: false }),
       300
     );
+    setDisplayInfo(false);
+    setClickedDate(undefined);
   };
   const goToday = () => {
     const today = new Date();
