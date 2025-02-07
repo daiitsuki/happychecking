@@ -7,6 +7,7 @@ interface IEventBtnBoxProps {
   eventData: IEventData[];
   onBtnClick: (btnId: number) => void;
   dataSave: () => void;
+  year: number;
   month: number;
 }
 
@@ -15,6 +16,7 @@ const EventBtnBox: React.FC<IEventBtnBoxProps> = ({
   eventData,
   onBtnClick,
   dataSave,
+  year,
   month,
 }) => (
   <div className={styles.btnBox}>
@@ -23,7 +25,8 @@ const EventBtnBox: React.FC<IEventBtnBoxProps> = ({
     </button>
     {[1, 2, 3].map((type) => {
       const eventLength = eventData.filter(
-        (obj) => obj.btnType === type && obj.month === month
+        (obj) =>
+          obj.btnType === type && obj.month === month && obj.year === year
       ).length;
       return (
         <button

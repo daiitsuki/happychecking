@@ -3,9 +3,13 @@ import styles from "../../styles/header/header.module.css";
 
 interface IHeaderProps {
   setDisplaySearch: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisplayReport: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.FC<IHeaderProps> = ({ setDisplaySearch }) => {
+const Header: React.FC<IHeaderProps> = ({
+  setDisplaySearch,
+  setDisplayReport,
+}) => {
   const today = () => {
     const today = new Date();
     const y = today.getFullYear();
@@ -32,6 +36,23 @@ const Header: React.FC<IHeaderProps> = ({ setDisplaySearch }) => {
         <span className={styles.date}>{today()}</span>
       </div>
       <div className={styles.searchBox}>
+        <svg
+          style={{ cursor: "pointer" }}
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          onClick={() => setDisplayReport((prev) => !prev)}
+        >
+          <path d="M21 7l-18 0" />
+          <path d="M18 10l3 -3l-3 -3" />
+          <path d="M6 20l-3 -3l3 -3" />
+          <path d="M3 17l18 0" />
+        </svg>
         <svg
           style={{ cursor: "pointer" }}
           xmlns="http://www.w3.org/2000/svg"

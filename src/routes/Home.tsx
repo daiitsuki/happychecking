@@ -21,6 +21,7 @@ export interface IEventData {
 const Home = () => {
   const [displayInfo, setDisplayInfo] = useState(false);
   const [displaySearch, setDisplaySearch] = useState(false);
+  const [displayReport, setDisplayReport] = useState(false);
   const [clickedDate, setClickedDate] = useState<IDateData>();
   const [eventData, setEventData] = useState<IEventData[]>([]);
 
@@ -54,7 +55,10 @@ const Home = () => {
   }, []);
   return (
     <>
-      <Header setDisplaySearch={setDisplaySearch} />
+      <Header
+        setDisplaySearch={setDisplaySearch}
+        setDisplayReport={setDisplayReport}
+      />
       <Search eventData={eventData} displaySearch={displaySearch} />
       <Calendar
         eventData={eventData}
@@ -64,6 +68,7 @@ const Home = () => {
         setClickedDate={setClickedDate}
         displayInfo={displayInfo}
         setDisplayInfo={setDisplayInfo}
+        displayReport={displayReport}
       />
       <DateInfo
         eventData={eventData}

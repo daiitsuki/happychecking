@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IEventData } from "../../routes/Home";
 import styles from "../../styles/calendar/calendarBody.module.css";
 import { Itransition } from "./Calendar";
+import CalendarReport from "./CalendarReport";
 import DateBox from "./DateBox";
 import EventBtnBox from "./EventBtnBox";
 
@@ -16,6 +17,7 @@ interface ICalendarBodyProps {
   clickedDate: IDateData | undefined;
   setClickedDate: React.Dispatch<React.SetStateAction<IDateData | undefined>>;
   transition: Itransition;
+  displayReport: boolean;
 }
 
 export interface IDateData {
@@ -43,6 +45,7 @@ export default function CalendarBody({
   clickedDate,
   setClickedDate,
   transition,
+  displayReport,
 }: ICalendarBodyProps) {
   const [btnClicked, setBtnClicked] = useState<IBtnClicked>({ clicked: false });
 
@@ -215,53 +218,58 @@ export default function CalendarBody({
             : { height: 300 }
         }
       >
-        <div
-          className={`${styles.dateBox} ${
-            transition.isMove
-              ? transition.direction === "prev"
-                ? `${styles.slideFromPrev}`
-                : `${styles.slideFromNext}`
-              : ``
-          }`}
-        >
-          {renderCalendar(year, month).map((n) => {
-            const isActive =
-              btnClicked.btnType && n.event?.includes(btnClicked.btnType);
+        {displayReport ? (
+          <CalendarReport year={year} month={month} eventData={eventData} />
+        ) : (
+          <div
+            className={`${styles.dateBox} ${
+              transition.isMove
+                ? transition.direction === "prev"
+                  ? `${styles.slideFromPrev}`
+                  : `${styles.slideFromNext}`
+                : ``
+            }`}
+          >
+            {renderCalendar(year, month).map((n) => {
+              const isActive =
+                btnClicked.btnType && n.event?.includes(btnClicked.btnType);
 
-            return (
-              <DateBox
-                key={`${n.year}_${n.month}_${n.date}`}
-                year={n.year}
-                month={n.month}
-                date={n.date}
-                ymd={n.ymd}
-                currentMonth={n.currentMonth}
-                event={n.event}
-                btnType={btnClicked.btnType}
-                btnClicked={btnClicked.clicked}
-                clickedDate={clickedDate}
-                onDateClick={() =>
-                  n.currentMonth &&
-                  dateClick({
-                    year: n.year,
-                    month: n.month,
-                    date: n.date,
-                    ymd: `${n.year}_${n.month}_${n.date}`,
-                    currentMonth: n.currentMonth,
-                    event: n.event,
-                  })
-                }
-                isActive={isActive}
-              />
-            );
-          })}
-        </div>
+              return (
+                <DateBox
+                  key={`${n.year}_${n.month}_${n.date}`}
+                  year={n.year}
+                  month={n.month}
+                  date={n.date}
+                  ymd={n.ymd}
+                  currentMonth={n.currentMonth}
+                  event={n.event}
+                  btnType={btnClicked.btnType}
+                  btnClicked={btnClicked.clicked}
+                  clickedDate={clickedDate}
+                  onDateClick={() =>
+                    n.currentMonth &&
+                    dateClick({
+                      year: n.year,
+                      month: n.month,
+                      date: n.date,
+                      ymd: `${n.year}_${n.month}_${n.date}`,
+                      currentMonth: n.currentMonth,
+                      event: n.event,
+                    })
+                  }
+                  isActive={isActive}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
       <EventBtnBox
         btnType={btnClicked.btnType}
         eventData={eventData}
         onBtnClick={eventBtnClick}
         dataSave={dataSave}
+        year={year}
         month={month}
       />
     </div>

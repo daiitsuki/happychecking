@@ -10,6 +10,7 @@ interface ICalendarProps {
   dataSave: () => Promise<void>;
   displayInfo: boolean;
   setDisplayInfo: React.Dispatch<React.SetStateAction<boolean>>;
+  displayReport: boolean;
   clickedDate: IDateData | undefined;
   setClickedDate: React.Dispatch<React.SetStateAction<IDateData | undefined>>;
 }
@@ -27,6 +28,7 @@ const Calendar: React.FC<ICalendarProps> = ({
   setClickedDate,
   clickedDate,
   displayInfo,
+  displayReport,
 }) => {
   const [criteria, setCriteria] = useState<Date>(new Date());
   const [transition, setTransition] = useState<Itransition>({ isMove: false });
@@ -106,6 +108,7 @@ const Calendar: React.FC<ICalendarProps> = ({
         clickedDate={clickedDate}
         setClickedDate={setClickedDate}
         transition={transition}
+        displayReport={displayReport}
       />
     </div>
   );
