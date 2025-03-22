@@ -66,20 +66,15 @@ export default function CalendarBody({
   const dayOfLastDate = () =>
     new Date(year, month - 1, lastDate(year, month)).getDay();
   const lastDate = (y: number, m: number) => {
-    if (m <= 0) {
-      y = y - 1;
-      m = 12 + m;
+    if (m < 1) {
+      y -= 1;
+      m = 12;
+    } else if (m > 12) {
+      y += 1;
+      m = 1;
     }
-    if (m >= 13) {
-      y = y + 1;
-      m = m - 12;
-    }
-    let arrLastDate = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if (y % 4 === 0) {
-      // 윤년일 경우 2월 29일 처리
-      arrLastDate[1] = 29;
-    }
-    return arrLastDate[m - 1];
+
+    return new Date(y, m, 0).getDate();
   };
 
   const eventCheck = (y: number, m: number, d: number) => {
@@ -101,7 +96,7 @@ export default function CalendarBody({
     for (let i = 1; i <= dayOfFirstDate(); i++) {
       let y = year;
       let m = month - 1;
-      let d = lastDate(y, m - 1) - (dayOfFirstDate() - i);
+      let d = lastDate(y, m) - (dayOfFirstDate() - i);
       if (month === 1) {
         y = y - 1;
         m = 12;

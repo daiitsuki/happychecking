@@ -22,6 +22,7 @@ const Home = () => {
   const [displayInfo, setDisplayInfo] = useState(false);
   const [displaySearch, setDisplaySearch] = useState(false);
   const [displayReport, setDisplayReport] = useState(false);
+  const [getNotification, setGetNotification] = useState(false);
   const [clickedDate, setClickedDate] = useState<IDateData>();
   const [eventData, setEventData] = useState<IEventData[]>([]);
 
@@ -48,7 +49,7 @@ const Home = () => {
     //
     // 배포 시에 주석 해제
     // 배포 시에 주석 해제
-    getData();
+    // getData();
     // 배포 시에 주석 해제
     // 배포 시에 주석 해제
     //
@@ -58,6 +59,8 @@ const Home = () => {
       <Header
         setDisplaySearch={setDisplaySearch}
         setDisplayReport={setDisplayReport}
+        getNotification={getNotification}
+        setGetNotification={setGetNotification}
       />
       <Search eventData={eventData} displaySearch={displaySearch} />
       <Calendar

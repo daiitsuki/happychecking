@@ -49,7 +49,7 @@ const EventBtnBox: React.FC<IEventBtnBoxProps> = ({
           }
           onClick={() => onBtnClick(type)}
         >
-          ■ {type === 1 ? "카페" : type === 2 ? "외식" : "거금"}
+          ■ {type === 1 ? "카페" : type === 2 ? "외식" : "여행"}
           {eventLength === 0 ? "" : `(${eventLength})`}
         </button>
       );

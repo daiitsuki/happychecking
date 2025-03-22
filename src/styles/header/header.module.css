@@ -43,7 +43,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  column-gap: 10px;
+  column-gap: 6px;
   border-radius: 34px;
   padding: 7px 25px 7px 0px;
+}
+
+.btns {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:active {
+    transform: scale(0.8);
+  }
 }
