@@ -129,7 +129,7 @@ const DateInfo: React.FC<IDateInfoProps> = ({
               }
             }}
           >
-            ■ {n === 1 ? "카페" : n === 2 ? "외식" : "거금"}
+            ■ {n === 1 ? "카페" : n === 2 ? "외식" : "여행"}
           </span>
           <input
             type="text"
