@@ -40,7 +40,7 @@ const Header: React.FC<IHeaderProps> = ({
         <span className={styles.date}>{today()}</span>
       </div>
       <div className={styles.searchBox}>
-        {getNotification ? (
+        {/* {getNotification ? (
           <svg
             className={styles.btns}
             xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ const Header: React.FC<IHeaderProps> = ({
             <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>{" "}
             <path d="M3 3l18 18"></path>{" "}
           </svg>
-        )}
+        )} */}
         <svg
           className={styles.btns}
           xmlns="http://www.w3.org/2000/svg"

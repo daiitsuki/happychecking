@@ -100,7 +100,7 @@
   justify-content: flex-end;
   background-color: white;
   border-radius: 0px 0px 34px 34px;
-  padding: 10px 30px;
+  padding: 7px 30px;
 }
 
 .btn {
@@ -111,5 +111,7 @@
 .save {
   margin-right: auto;
   font-weight: 600;
-  /* color: #c3bef0; */
+  display: flex;
+  align-items: center;
+  column-gap: 2px;
 }
